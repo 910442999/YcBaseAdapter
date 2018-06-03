@@ -1,0 +1,2 @@
+# YcBaseAdapter
+BaseAdapter
