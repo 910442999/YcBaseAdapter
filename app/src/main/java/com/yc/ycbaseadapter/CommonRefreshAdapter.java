@@ -1,8 +1,6 @@
 package com.yc.ycbaseadapter;
 
 import android.content.Context;
-import android.view.View;
-import android.widget.Toast;
 
 import com.yc.YcRecyclerViewBaseAdapter.adapter.YcCommonBaseAdapter;
 import com.yc.YcRecyclerViewBaseAdapter.base.YcBaseViewHolder;
@@ -18,8 +16,8 @@ public class CommonRefreshAdapter extends YcCommonBaseAdapter<String> {
     protected int getItemLayoutId() {
         return R.layout.item_layout;
     }
-    public CommonRefreshAdapter(Context context, List<String> datas, boolean isLoadMore) {
-        super(context, datas, isLoadMore);
+    public CommonRefreshAdapter(Context context, List<String> datas) {
+        super(context, datas);
     }
 
     @Override

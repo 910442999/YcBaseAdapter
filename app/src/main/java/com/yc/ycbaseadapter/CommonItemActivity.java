@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.yc.YcRecyclerViewBaseAdapter.base.YcBaseViewHolder;
 import com.yc.YcRecyclerViewBaseAdapter.interfaces.OnItemClickListener;
 import com.yc.YcRecyclerViewBaseAdapter.interfaces.OnLoadMoreListener;
@@ -34,19 +33,21 @@ public class CommonItemActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 
         //初始化adapter
-        mAdapter = new CommonRefreshAdapter(this, null, true);
+        mAdapter = new CommonRefreshAdapter(this, null);
 
-//        //初始化EmptyView
-//        View emptyView = LayoutInflater.from(this).inflate(R.layout.empty_layout, (ViewGroup) mRecyclerView.getParent(), false);
-//        mAdapter.setEmptyView(emptyView);
+        //        //初始化EmptyView
 
-//        //初始化 开始加载更多的loading View
-//        mAdapter.setLoadingView(R.layout.load_loading_layout);
-//        //加载失败，更新footer view提示
-//        mAdapter.setLoadFailedView(R.layout.load_failed_layout);
-//        //加载完成，更新footer view提示
-//        mAdapter.setLoadEndView(R.layout.load_end_layout);
+        View emptyView = LayoutInflater.from(this).inflate(R.layout.empty_layout, (ViewGroup) mRecyclerView.getParent(), false);
+        mAdapter.setEmptyView(emptyView);
 
+        //        //初始化 开始加载更多的loading View
+        //        mAdapter.setLoadingView(R.layout.load_loading_layout);
+        //        //加载失败，更新footer view提示
+        //        mAdapter.setLoadFailedView(R.layout.load_failed_layout);
+        //        //加载完成，更新footer view提示
+        //        mAdapter.setLoadEndView(R.layout.load_end_layout);
+
+        mAdapter.setEnableLoadMore(true);
         //设置加载更多触发的事件监听
         mAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -61,6 +62,7 @@ public class CommonItemActivity extends AppCompatActivity {
             @Override
             public void onItemClick(YcBaseViewHolder viewHolder, String data, int position) {
                 Toast.makeText(CommonItemActivity.this, data, Toast.LENGTH_SHORT).show();
+                mAdapter.setEnableLoadMore(false);
             }
         });
 
@@ -77,7 +79,7 @@ public class CommonItemActivity extends AppCompatActivity {
             @Override
             public void run() {
                 List<String> data = new ArrayList<>();
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 3; i++) {
                     data.add("item--" + i);
                 }
                 //刷新数据
@@ -107,7 +109,7 @@ public class CommonItemActivity extends AppCompatActivity {
                     mAdapter.loadEnd();
                 } else {
                     final List<String> data = new ArrayList<>();
-                    for (int i = 0; i < 10; i++) {
+                    for (int i = 0; i < 3; i++) {
                         data.add("item--" + (mAdapter.getDataCount() + i));
                     }
                     //刷新数据

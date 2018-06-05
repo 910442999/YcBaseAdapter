@@ -32,9 +32,10 @@ public class MainActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.button1:
-                start(CommonItemActivity.class);
+                start(OneItemActivity.class);
                 break;
             case R.id.button2:
+                start(CommonItemActivity.class);
                 break;
             case R.id.button3:
                 break;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
     private void start(Class<?> cls) {
         startActivity(new Intent(this, cls));
     }
