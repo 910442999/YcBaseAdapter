@@ -321,17 +321,35 @@ public abstract class YcBaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
         setEmptyView(UiUtils.inflate(mContext, layoutEmptyId));
     }
 
-
     /**
      * 初始化emptyView
      *
      * @param emptyView
      */
     public void setEmptyView(View emptyView) {
+        setEmptyView(emptyView, RecyclerView.LayoutParams.MATCH_PARENT);
+    }
+
+    /**
+     * 初始化emptyView
+     *
+     * @param emptyView
+     */
+    public void setEmptyView(View emptyView, int height) {
+        setEmptyView(emptyView, RecyclerView.LayoutParams.MATCH_PARENT, height);
+    }
+
+
+    /**
+     * 初始化emptyView
+     *
+     * @param emptyView
+     */
+    public void setEmptyView(View emptyView, int width, int height) {
         boolean insert = false;
         if (mEmptyLayout == null) {
             mEmptyLayout = new FrameLayout(emptyView.getContext());
-            final RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT);
+            final RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(width, height);
             final ViewGroup.LayoutParams lp = emptyView.getLayoutParams();
             if (lp != null) {
                 layoutParams.width = lp.width;
