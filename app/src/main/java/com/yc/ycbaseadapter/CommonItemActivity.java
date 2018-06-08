@@ -5,10 +5,6 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yc.YcRecyclerViewBaseAdapter.base.YcBaseViewHolder;
@@ -17,6 +13,8 @@ import com.yc.YcRecyclerViewBaseAdapter.interfaces.OnLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.yc.YcRecyclerViewBaseAdapter.adapter.YcBaseAdapter.STATUS_DEFAULT;
 
 public class CommonItemActivity extends AppCompatActivity {
 
@@ -33,12 +31,11 @@ public class CommonItemActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 
         //初始化adapter
-        mAdapter = new CommonRefreshAdapter(this, null);
+        mAdapter = new CommonRefreshAdapter(this);
 
         //        //初始化EmptyView
 
-        View emptyView = LayoutInflater.from(this).inflate(R.layout.empty_layout, (ViewGroup) mRecyclerView.getParent(), false);
-        mAdapter.setEmptyView(emptyView);
+        mAdapter.setEmptyView();
 
         //        //初始化 开始加载更多的loading View
         //        mAdapter.setLoadingView(R.layout.load_loading_layout);
@@ -85,12 +82,12 @@ public class CommonItemActivity extends AppCompatActivity {
                 //刷新数据
                 mAdapter.setNewData(data);
 
-                TextView t1 = new TextView(CommonItemActivity.this);
-                t1.setText("我是header-1");
-                mAdapter.addHeaderView(t1);
-                TextView t2 = new TextView(CommonItemActivity.this);
-                t2.setText("我是header-2");
-                mAdapter.addHeaderView(t2);
+                //                TextView t1 = new TextView(CommonItemActivity.this);
+                //                t1.setText("我是header-1");
+                //                mAdapter.addHeaderView(t1);
+                //                TextView t2 = new TextView(CommonItemActivity.this);
+                //                t2.setText("我是header-2");
+                //                mAdapter.addHeaderView(t2);
             }
         }, 2000);
     }
@@ -106,7 +103,7 @@ public class CommonItemActivity extends AppCompatActivity {
                     isFailed = false;
                     mAdapter.loadFailed();
                 } else if (mAdapter.getItemCount() >= 20) {
-                    mAdapter.loadEnd();
+                    mAdapter.loadMoreEnd(STATUS_DEFAULT);
                 } else {
                     final List<String> data = new ArrayList<>();
                     for (int i = 0; i < 3; i++) {

@@ -1,24 +1,25 @@
 package com.yc.YcRecyclerViewBaseAdapter.adapter;
 
 import android.content.Context;
+import android.support.annotation.IntRange;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-import com.yc.YcRecyclerViewBaseAdapter.base.YcBaseAdapter;
 import com.yc.YcRecyclerViewBaseAdapter.base.YcBaseViewHolder;
 import com.yc.YcRecyclerViewBaseAdapter.interfaces.OnItemChildClickListener;
 import com.yc.YcRecyclerViewBaseAdapter.interfaces.OnItemClickListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class YcCommonBaseAdapter<T> extends YcBaseAdapter<T> {
 
+    public YcCommonBaseAdapter(Context context) {
+        super(context);
+    }
+
     private OnItemClickListener<T> mItemClickListener;
-
-
     private ArrayList<Integer> mViewId = new ArrayList<>();
     private ArrayList<Integer> mItemChildIds = new ArrayList<>();
     private ArrayList<OnItemChildClickListener<T>> mItemChildListeners = new ArrayList<>();
@@ -37,18 +38,15 @@ public abstract class YcCommonBaseAdapter<T> extends YcBaseAdapter<T> {
         mItemChildListeners.add(itemChildClickListener);
     }
 
-    public YcCommonBaseAdapter(Context context, List<T> datas, boolean isOpenLoadMore) {
-        super(context, datas, isOpenLoadMore);
-    }
-
     protected abstract void convert(YcBaseViewHolder holder, T data, int position);
 
     protected abstract int getItemLayoutId();
 
+
     @Override
     public YcBaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (isCommonItemView(viewType)) {
-            return YcBaseViewHolder.create(mContext, getItemLayoutId(), parent);
+            return YcBaseViewHolder.create(parent.getContext(), getItemLayoutId(), parent);
         }
         return super.onCreateViewHolder(parent, viewType);
     }
@@ -57,12 +55,16 @@ public abstract class YcCommonBaseAdapter<T> extends YcBaseAdapter<T> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int viewType = holder.getItemViewType();
         if (isCommonItemView(viewType)) {
-            bindCommonItem(holder, position - getHeaderCount());
+            position = position - getNormalHeaderLayoutCount();
+            if (getItem(position) != null) {
+                bindCommonItem(holder, position);
+            }
         }
     }
 
     private void bindCommonItem(RecyclerView.ViewHolder holder, final int position) {
         final YcBaseViewHolder viewHolder = (YcBaseViewHolder) holder;
+
         convert(viewHolder, getAllData().get(position), position);
 
         viewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
@@ -101,4 +103,11 @@ public abstract class YcCommonBaseAdapter<T> extends YcBaseAdapter<T> {
         //        }
     }
 
+    @Nullable
+    public T getItem(@IntRange(from = 0) int position) {
+        if ((position >= 0 && position < getAllData().size()))
+            return getAllData().get(position);
+        else
+            return null;
+    }
 }

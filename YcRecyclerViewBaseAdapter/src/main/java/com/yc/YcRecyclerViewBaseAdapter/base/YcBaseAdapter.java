@@ -6,13 +6,12 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-
+import com.yc.YcRecyclerViewBaseAdapter.R;
 import com.yc.YcRecyclerViewBaseAdapter.interfaces.OnLoadMoreListener;
 import com.yc.YcRecyclerViewBaseAdapter.utils.UiUtils;
 
@@ -38,7 +37,7 @@ public abstract class YcBaseAdapter<T> extends RecyclerView.Adapter<RecyclerView
 
     protected Context mContext;
     private List<T> mDatas;
-    private boolean isAutoLoadMore = true;//是否自动加载，当数据不满一屏幕会自动加载
+    private boolean isAutoLoadMore = false;//是否自动加载，当数据不满一屏幕会自动加载
 
     private boolean isRemoveEmptyView;
 
@@ -259,16 +258,16 @@ public abstract class YcBaseAdapter<T> extends RecyclerView.Adapter<RecyclerView
      * @param layoutManager
      */
     private void startLoadMore(RecyclerView recyclerView, final RecyclerView.LayoutManager layoutManager) {
-        if (!mLoadMoreEnable || mLoadMoreListener == null) {
-            return;
-        }
+        //        if (!mLoadMoreEnable || mLoadMoreListener == null) {
+        //            return;
+        //        }
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (!isAutoLoadMore && findLastVisibleItemPosition(layoutManager) + 1 == getItemCount()) {
+                    if (mLoadMoreEnable && isAutoLoadMore && findLastVisibleItemPosition(layoutManager) + 1 == getItemCount()) {
                         scrollLoadMore();
                     }
                 }
@@ -277,7 +276,7 @@ public abstract class YcBaseAdapter<T> extends RecyclerView.Adapter<RecyclerView
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (isAutoLoadMore && findLastVisibleItemPosition(layoutManager) + 1 == getItemCount()) {
+                if (mLoadMoreEnable && isAutoLoadMore && findLastVisibleItemPosition(layoutManager) + 1 == getItemCount()) {
                     if (mDatas.isEmpty() && mEmptyLayout != null) {
                         return;
                     }
@@ -322,7 +321,9 @@ public abstract class YcBaseAdapter<T> extends RecyclerView.Adapter<RecyclerView
      * 清空footer view
      */
     private void removeFooterView() {
-        mFooterLayout.removeAllViews();
+        if (mFooterLayout != null) {
+            mFooterLayout.removeAllViews();
+        }
     }
 
     /**
@@ -442,7 +443,7 @@ public abstract class YcBaseAdapter<T> extends RecyclerView.Adapter<RecyclerView
 
     @Deprecated
     public void setEmptyView(int layoutEmptyId) {
-        setLoadEndView(UiUtils.inflate(mContext, layoutEmptyId));
+        setEmptyView(UiUtils.inflate(mContext, layoutEmptyId));
     }
 
     /**
@@ -485,7 +486,8 @@ public abstract class YcBaseAdapter<T> extends RecyclerView.Adapter<RecyclerView
     public void removeEmptyView() {
         isRemoveEmptyView = true;
         notifyDataSetChanged();
-        //        mEmptyLayout.removeAllViews();
+        if (mEmptyLayout != null)
+            mEmptyLayout.removeAllViews();
     }
 
     /**
@@ -513,7 +515,7 @@ public abstract class YcBaseAdapter<T> extends RecyclerView.Adapter<RecyclerView
         }
         isLoading = false;
         isReset = true;
-        isAutoLoadMore = true;
+//        isAutoLoadMore = true;
         mDatas.clear();
     }
 
@@ -549,6 +551,7 @@ public abstract class YcBaseAdapter<T> extends RecyclerView.Adapter<RecyclerView
 
     }
 
+
     /**
      * Set the enabled state of load more.
      *
@@ -557,8 +560,26 @@ public abstract class YcBaseAdapter<T> extends RecyclerView.Adapter<RecyclerView
     public void setEnableLoadMore(boolean enable) {
 
         mLoadMoreEnable = enable;
-//        setLoadingView();
-
+        if (mLoadMoreEnable) {
+            if (mLoadingView == null) {
+                //加载更多数 , 更新footer view提示
+                setLoadingView(R.layout.load_loading_layout);
+            }
+            if (mLoadFailedView == null) {
+                //加载失败，更新footer view提示
+                setLoadFailedView(R.layout.load_failed_layout);
+            }
+            if (mLoadEndView == null) {
+                //加载完成，更新footer view提示
+                setLoadEndView(R.layout.load_end_layout);
+            }
+        }
     }
 
+    /**
+     * Refresh complete
+     */
+    public void setIsAutoLoadMore(Boolean autoLoadMore) {
+        isAutoLoadMore = autoLoadMore;
+    }
 }

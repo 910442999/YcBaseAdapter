@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/ll_footer_loading"
@@ -11,20 +11,25 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="10dp"
-        android:visibility="gone"
+        android:visibility="visible"
         tools:visibility="visible">
 
+        <FrameLayout
+            android:id="@+id/fl_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <ProgressBar
-            android:id="@+id/pb_loading"
-            android:layout_width="25dp"
-            android:layout_height="25dp" />
+            <ProgressBar
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
+        </FrameLayout>
+
 
         <TextView
             android:id="@+id/tv_loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:text="正在加载中..." />
+            android:text="正在加载中..."/>
     </LinearLayout>
 </FrameLayout>

@@ -26,7 +26,7 @@ public class UiUtils {
     }
 
     public static View inflate(Context context, int layoutId) {
-        if (layoutId <= 0) {
+        if (layoutId <= 0 || context == null) {
             return null;
         }
         return LayoutInflater.from(context).inflate(layoutId, null);
