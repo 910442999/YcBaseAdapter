@@ -45,7 +45,8 @@ public class OneItemActivity extends AppCompatActivity {
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
-        adapter = new CommonRefreshAdapter(this);
+        adapter = new RefreshAdapter(this);
+        //设置 空布局
         adapter.setEmptyView();
         mRecyclerView.setAdapter(adapter);
         adapter.setEnableLoadMore(true);

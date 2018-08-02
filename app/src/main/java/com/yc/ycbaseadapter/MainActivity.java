@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 start(OneItemActivity.class);
                 break;
             case R.id.button2:
-                start(CommonItemActivity.class);
+                start(RefreshActivity1.class);
                 break;
             case R.id.button3:
                 break;

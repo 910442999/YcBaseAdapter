@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/YcBaseAdapter.iml" filepath="$PROJECT_DIR$/.idea/YcBaseAdapter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/YcBaseAdapter.iml" filepath="$PROJECT_DIR$/YcBaseAdapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/YcRecyclerViewBaseAdapter/YcRecyclerViewBaseAdapter.iml" filepath="$PROJECT_DIR$/YcRecyclerViewBaseAdapter/YcRecyclerViewBaseAdapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
