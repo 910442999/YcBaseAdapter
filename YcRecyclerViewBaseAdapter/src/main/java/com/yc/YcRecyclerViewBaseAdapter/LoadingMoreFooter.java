@@ -14,7 +14,7 @@ import com.yc.YcRecyclerViewBaseAdapter.progressindicator.AVLoadingIndicatorView
 
 
 /**
- * Created by zhang on 2018/5/31.
+ * Created by yc on 2018/5/31.
  */
 
 public class LoadingMoreFooter extends LinearLayout {
