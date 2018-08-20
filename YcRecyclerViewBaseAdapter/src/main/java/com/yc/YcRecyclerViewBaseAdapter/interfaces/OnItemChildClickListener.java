@@ -1,11 +1,13 @@
 package com.yc.YcRecyclerViewBaseAdapter.interfaces;
 
 
-import com.yc.YcRecyclerViewBaseAdapter.base.YcBaseViewHolder;
+import android.view.View;
+
+import com.yc.YcRecyclerViewBaseAdapter.adapter.YcBaseAdapter;
 
 /**
  * 条目 子控件的点击事件
  */
-public interface OnItemChildClickListener<T> {
-    void onItemChildClick(YcBaseViewHolder viewHolder, T data, int position);
+public interface OnItemChildClickListener {
+    void onItemChildClick(YcBaseAdapter adapter, View view, int position);
 }

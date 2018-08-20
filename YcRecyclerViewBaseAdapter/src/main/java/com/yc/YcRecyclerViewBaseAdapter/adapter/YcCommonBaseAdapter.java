@@ -13,7 +13,7 @@ import com.yc.YcRecyclerViewBaseAdapter.interfaces.OnItemClickListener;
 
 import java.util.ArrayList;
 
-public abstract class YcCommonBaseAdapter<T> extends YcBaseAdapter<T> {
+public abstract class YcCommonBaseAdapter<T> extends YcBaseAdapter<T,YcBaseViewHolder> {
 
     public YcCommonBaseAdapter(Context context) {
         super(context);
@@ -22,7 +22,7 @@ public abstract class YcCommonBaseAdapter<T> extends YcBaseAdapter<T> {
     private OnItemClickListener<T> mItemClickListener;
     private ArrayList<Integer> mViewId = new ArrayList<>();
     private ArrayList<Integer> mItemChildIds = new ArrayList<>();
-    private ArrayList<OnItemChildClickListener<T>> mItemChildListeners = new ArrayList<>();
+
 
     public void setOnItemClickListener(OnItemClickListener<T> itemClickListener) {
         mItemClickListener = itemClickListener;
@@ -33,10 +33,11 @@ public abstract class YcCommonBaseAdapter<T> extends YcBaseAdapter<T> {
     //        mListener.add(swipeMenuClickListener);
     //    }
 
-    public void setOnItemChildClickListener(int viewId, OnItemChildClickListener<T> itemChildClickListener) {
-        mItemChildIds.add(viewId);
-        mItemChildListeners.add(itemChildClickListener);
-    }
+    //    public void setOnItemChildClickListener(int viewId, OnItemChildClickListener<T> itemChildClickListener) {
+    //        mItemChildIds.add(viewId);
+    //        mOnItemChildClickListeners.add(itemChildClickListener);
+    //    }
+
 
     protected abstract void convert(YcBaseViewHolder holder, T data, int position);
 
@@ -76,17 +77,17 @@ public abstract class YcCommonBaseAdapter<T> extends YcBaseAdapter<T> {
             }
         });
 
-        for (int i = 0; i < mItemChildIds.size(); i++) {
-            final int tempI = i;
-            if (viewHolder.getConvertView().findViewById(mItemChildIds.get(i)) != null) {
-                viewHolder.getConvertView().findViewById(mItemChildIds.get(i)).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mItemChildListeners.get(tempI).onItemChildClick(viewHolder, getAllData().get(position), position);
-                    }
-                });
-            }
-        }
+        //        for (int i = 0; i < mItemChildIds.size(); i++) {
+        //            final int tempI = i;
+        //            if (viewHolder.getConvertView().findViewById(mItemChildIds.get(i)) != null) {
+        //                viewHolder.getConvertView().findViewById(mItemChildIds.get(i)).setOnClickListener(new View.OnClickListener() {
+        //                    @Override
+        //                    public void onClick(View v) {
+        //                        mItemChildListeners.get(tempI).onItemChildClick(viewHolder, getAllData().get(position), position);
+        //                    }
+        //                });
+        //            }
+        //        }
 
         //        if (mViewId.size() > 0 && mListener.size() > 0 && viewHolder.getSwipeView() != null) {
         //            ViewGroup swipeView = (ViewGroup) viewHolder.getSwipeView();

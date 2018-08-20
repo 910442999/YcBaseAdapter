@@ -9,9 +9,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.yc.YcRecyclerViewBaseAdapter.adapter.YcCommonBaseAdapter;
+import com.yc.YcRecyclerViewBaseAdapter.adapter.YcBaseAdapter;
+import com.yc.YcRecyclerViewBaseAdapter.interfaces.OnItemChildClickListener;
 import com.yc.YcRecyclerViewBaseAdapter.interfaces.OnLoadMoreListener;
+import com.yc.ycbaseadapter.adapter.OneItemAdapter;
+import com.yc.ycbaseadapter.adapter.RefreshAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,15 +30,7 @@ import static com.yc.YcRecyclerViewBaseAdapter.adapter.YcBaseAdapter.STATUS_END_
 public class OneItemActivity extends AppCompatActivity {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-    @BindView(R.id.tv_no_loading)
-    TextView mTvNoLoading;
-    @BindView(R.id.tv_is_loading)
-    TextView mTvIsLoading;
-    @BindView(R.id.tv_loadMoreEnd)
-    TextView mTvLoadMoreEnd;
-    private List<String> data = new ArrayList<>();
-    private YcCommonBaseAdapter adapter;
-    boolean loadMoreEnd = false;
+    private OneItemAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,38 +41,30 @@ public class OneItemActivity extends AppCompatActivity {
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
-        adapter = new RefreshAdapter(this);
+        adapter = new OneItemAdapter(this);
         //设置 空布局
         adapter.setEmptyView();
         mRecyclerView.setAdapter(adapter);
-        adapter.setEnableLoadMore(true);
-        adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(boolean isReload) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        getData();
-                        Log.d("test", "load more completed");
 
-                    }
-                }, 2000);
-            }
-        });
+        //添加头布局
         View headerView = getHeaderView(0, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //点击添加头布局
                 adapter.addHeaderView(getHeaderView(1, getRemoveHeaderListener()), 0);
             }
         });
+        //将头布局文件添加到适配器中
         adapter.addHeaderView(headerView);
 
+        //脚布局
         View footerView = getFooterView(0, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 adapter.addFooterView(getFooterView(1, getRemoveFooterListener()), 0);
             }
         });
+        //添加脚布局到适配器中
         adapter.addFooterView(footerView, 0);
 
         //延时3s刷新列表
@@ -84,7 +72,7 @@ public class OneItemActivity extends AppCompatActivity {
             @Override
             public void run() {
                 List<String> data = new ArrayList<>();
-                for (int i = 0; i < 1; i++) {
+                for (int i = 0; i < 5; i++) {
                     data.add("item--" + i);
                 }
                 //刷新数据
@@ -101,8 +89,29 @@ public class OneItemActivity extends AppCompatActivity {
         }, 2000);
 
 
+        //添加子view的点击事件
+        adapter.setOnItemChildClickListener(new OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(YcBaseAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.item_btn:
+                        Object o = adapter.getAllData().get(position);
+                        Toast.makeText(OneItemActivity.this, "当前条目 :" + position + "----" + "条目数据 :" + o.toString(), Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case R.id.item_title:
+                        Toast.makeText(OneItemActivity.this, "当前条目 :" + position + "----" + "这是title", Toast.LENGTH_SHORT).show();
+                        break;
+
+
+                }
+
+            }
+        });
+
     }
 
+    //添加头布局的方法
     private View getHeaderView(int type, View.OnClickListener listener) {
         View view = getLayoutInflater().inflate(R.layout.top_view, (ViewGroup) mRecyclerView.getParent(), false);
         TextView textView = (TextView) view.findViewById(R.id.tv_header);
@@ -114,6 +123,7 @@ public class OneItemActivity extends AppCompatActivity {
         return view;
     }
 
+    //移除头布局的监听
     private View.OnClickListener getRemoveHeaderListener() {
         return new View.OnClickListener() {
             @Override
@@ -123,6 +133,7 @@ public class OneItemActivity extends AppCompatActivity {
         };
     }
 
+    //添加脚布局的方法
     private View getFooterView(int type, View.OnClickListener listener) {
         View view = getLayoutInflater().inflate(R.layout.top_view, (ViewGroup) mRecyclerView.getParent(), false);
         TextView textView = (TextView) view.findViewById(R.id.tv_header);
@@ -134,6 +145,7 @@ public class OneItemActivity extends AppCompatActivity {
         return view;
     }
 
+    //移除脚布局的监听
     private View.OnClickListener getRemoveFooterListener() {
         return new View.OnClickListener() {
             @Override
@@ -143,40 +155,4 @@ public class OneItemActivity extends AppCompatActivity {
         };
     }
 
-    private int mInt = 10;
-
-    /**
-     * 获取测试数据
-     */
-    private void getData() {
-        if (mInt < 20) {
-            data.clear();
-            for (int i = 0; i < 10; i++) {
-                data.add("加载条目 : " + i);
-            }
-            mInt += 10;
-            adapter.setLoadMoreData(data);
-        } else {
-            //            adapter.loadMoreComplete();
-            adapter.loadMoreEnd(STATUS_DEFAULT);
-        }
-    }
-
-    @OnClick({R.id.tv_no_loading, R.id.tv_is_loading, R.id.tv_loadMoreEnd})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.tv_no_loading:
-                adapter.setEnableLoadMore(false);
-                break;
-            case R.id.tv_is_loading:
-                adapter.setEnableLoadMore(true);
-                break;
-            case R.id.tv_loadMoreEnd:
-                loadMoreEnd = true;
-                adapter.loadMoreComplete();
-                break;
-
-
-        }
-    }
 }

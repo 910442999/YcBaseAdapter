@@ -7,34 +7,6 @@
     android:orientation="vertical"
     tools:context=".OneItemActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/tv_no_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            android:padding="10dp"
-            android:text="禁止加载更多"
-            android:textColor="@color/white" />
-
-        <TextView
-            android:id="@+id/tv_is_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
-            android:padding="10dp"
-            android:text="启动加载更多" />
-
-        <TextView
-            android:id="@+id/tv_loadMoreEnd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="加载结束隐藏动画" />
-    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"

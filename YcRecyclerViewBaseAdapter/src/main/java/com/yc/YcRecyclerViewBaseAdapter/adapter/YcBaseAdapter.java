@@ -2,6 +2,8 @@ package com.yc.YcRecyclerViewBaseAdapter.adapter;
 
 import android.content.Context;
 import android.os.Handler;
+import android.support.annotation.IntRange;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +18,8 @@ import android.widget.RelativeLayout;
 
 import com.yc.YcRecyclerViewBaseAdapter.R;
 import com.yc.YcRecyclerViewBaseAdapter.base.YcBaseViewHolder;
+import com.yc.YcRecyclerViewBaseAdapter.interfaces.OnItemChildClickListener;
+import com.yc.YcRecyclerViewBaseAdapter.interfaces.OnItemClickListener;
 import com.yc.YcRecyclerViewBaseAdapter.interfaces.OnLoadMoreListener;
 import com.yc.YcRecyclerViewBaseAdapter.utils.UiUtils;
 
@@ -25,7 +29,7 @@ import java.util.List;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-public abstract class YcBaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
+public abstract class YcBaseAdapter<T, K extends YcBaseViewHolder> extends RecyclerView.Adapter<ViewHolder> {
 
     private List<T> mDatas = new ArrayList<>();
     private Handler mHandler = new Handler();
@@ -64,9 +68,22 @@ public abstract class YcBaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
 
     private Context mContext;
 
+    public static final int STATUS_DEFAULT = 1;//一直显示加载完成
+    public static final int STATUS_END_SHOW_GONE = 2;//显示1秒后隐藏 , 持续显示与隐藏
+    public static final int STATUS_END_GONE = 3;//隐藏加载完成布局
+    private OnItemClickListener<T> mItemClickListener;
+    private OnItemChildClickListener mOnItemChildClickListeners;
+
     public YcBaseAdapter(Context context) {
         mContext = context;
     }
+
+    //子类必须实现将数据传递给父类onBindViewHolder
+    protected abstract void convert(YcBaseViewHolder holder, T data, int position);
+
+    //获取子类的布局
+    protected abstract int getItemLayoutId();
+
 
     private RecyclerView mRecyclerView;
 
@@ -95,10 +112,6 @@ public abstract class YcBaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
         getRecyclerView().setAdapter(this);
     }
 
-    public void setOnLoadMoreListener(OnLoadMoreListener loadMoreListener) {
-        mLoadMoreListener = loadMoreListener;
-
-    }
 
     @Override
     public int getItemCount() {
@@ -120,8 +133,6 @@ public abstract class YcBaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
         return count;
     }
 
-    private boolean isAddHeader = false;
-    private boolean isAddFooter = false;
 
     @Override
     public int getItemViewType(int position) {
@@ -207,8 +218,11 @@ public abstract class YcBaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
             case TYPE_RELOAD_VIEW:
                 viewHolder = YcBaseViewHolder.create(mReloadView);
                 break;
+            default:
+                //正常布局
+                viewHolder = YcBaseViewHolder.create(mContext, getItemLayoutId(), parent);
         }
-
+        viewHolder.setAdapter(this);
         return viewHolder;
 
 
@@ -969,10 +983,6 @@ public abstract class YcBaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
         }
     }
 
-    public static final int STATUS_DEFAULT = 1;//一直显示加载完成
-    public static final int STATUS_END_SHOW_GONE = 2;//显示1秒后隐藏 , 持续显示与隐藏
-    public static final int STATUS_END_GONE = 3;//隐藏加载完成布局
-
     /**
      * Refresh end, no more data , gone Load more
      */
@@ -1048,7 +1058,7 @@ public abstract class YcBaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
         return mDatas.size();
     }
 
-    protected List<T> getAllData() {
+    public List<T> getAllData() {
         return mDatas;
     }
 
@@ -1111,4 +1121,77 @@ public abstract class YcBaseAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
         notifyItemInserted(size + getNormalHeaderLayoutCount());
     }
 
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        int viewType = holder.getItemViewType();
+        if (isCommonItemView(viewType)) {
+            position = position - getNormalHeaderLayoutCount();
+            if (getItem(position) != null) {
+                bindCommonItem(holder, position);
+            }
+        }
+    }
+
+    //设置加载更多的监听器
+    public void setOnLoadMoreListener(OnLoadMoreListener loadMoreListener) {
+        mLoadMoreListener = loadMoreListener;
+
+    }
+
+    /**
+     * 设置条目点击监听
+     *
+     * @param itemClickListener
+     */
+    public void setOnItemClickListener(OnItemClickListener<T> itemClickListener) {
+        mItemClickListener = itemClickListener;
+    }
+
+    /**
+     * @return 获取条目点击监听
+     */
+    public final OnItemClickListener getOnItemClickListener() {
+        return mItemClickListener;
+    }
+
+    /**
+     * 设置条目中子view的点击监听
+     *
+     * @param listener
+     */
+    public void setOnItemChildClickListener(OnItemChildClickListener listener) {
+        mOnItemChildClickListeners = listener;
+    }
+
+    /**
+     * 获取条目中子view的点击监听
+     */
+    @Nullable
+    public final OnItemChildClickListener getOnItemChildClickListener() {
+        return mOnItemChildClickListeners;
+    }
+
+    private void bindCommonItem(RecyclerView.ViewHolder holder, final int position) {
+        final YcBaseViewHolder viewHolder = (YcBaseViewHolder) holder;
+
+        convert(viewHolder, getAllData().get(position), position);
+
+        viewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getOnItemClickListener() != null) {
+                    mItemClickListener.onItemClick(viewHolder, getAllData().get(position), position);
+                }
+            }
+        });
+    }
+
+    @Nullable
+    public T getItem(@IntRange(from = 0) int position) {
+        if ((position >= 0 && position < getAllData().size()))
+            return getAllData().get(position);
+        else
+            return null;
+    }
 }

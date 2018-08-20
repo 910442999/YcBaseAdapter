@@ -9,5 +9,5 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="10dp"
-        android:text="没有更多数据了" />
+        android:text="@string/load_end" />
 </LinearLayout>

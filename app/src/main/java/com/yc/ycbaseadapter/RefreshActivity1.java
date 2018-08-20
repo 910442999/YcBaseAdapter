@@ -5,42 +5,70 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yc.YcRecyclerViewBaseAdapter.base.YcBaseViewHolder;
 import com.yc.YcRecyclerViewBaseAdapter.interfaces.OnItemClickListener;
 import com.yc.YcRecyclerViewBaseAdapter.interfaces.OnLoadMoreListener;
+import com.yc.ycbaseadapter.adapter.RefreshAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.yc.YcRecyclerViewBaseAdapter.adapter.YcBaseAdapter.STATUS_DEFAULT;
 
 public class RefreshActivity1 extends AppCompatActivity {
 
+    @BindView(R.id.tv_no_loading)
+    TextView mTvNoLoading;
+    @BindView(R.id.tv_is_loading)
+    TextView mTvIsLoading;
+    @BindView(R.id.tv_loadMoreEnd)
+    TextView mTvLoadMoreEnd;
+    @BindView(R.id.recyclerview)
+    RecyclerView mRecyclerview;
     private RefreshAdapter mAdapter;
 
-    private RecyclerView mRecyclerView;
-
     private boolean isFailed = true;
+    private List<String> data = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_layout);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        ButterKnife.bind(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerview.setLayoutManager(layoutManager);
 
         //初始化adapter
         mAdapter = new RefreshAdapter(this);
-
-        //        //初始化EmptyView
+        //初始化EmptyView
         mAdapter.setEmptyView();
+        mRecyclerview.setAdapter(mAdapter);
+        //设置是否开启加载更多
         mAdapter.setEnableLoadMore(true);
-        //设置加载更多触发的事件监听
+
+        //设置加载更多的监听
         mAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(boolean isReload) {
-                loadMore();
+                //模拟网络请求加载数据
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadMore();
+                        Log.d("test", "load more completed");
+
+                    }
+                }, 2000);
             }
         });
 
@@ -54,30 +82,21 @@ public class RefreshActivity1 extends AppCompatActivity {
         });
 
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(layoutManager);
-
-        mRecyclerView.setAdapter(mAdapter);
 
 
         //延时3s刷新列表
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                List<String> data = new ArrayList<>();
-                for (int i = 0; i < 3; i++) {
+
+                for (int i = 0; i < 10; i++) {
                     data.add("item--" + i);
                 }
                 //刷新数据
-                mAdapter.setNewData(data);
 
-                //                TextView t1 = new TextView(CommonItemActivity.this);
-                //                t1.setText("我是header-1");
-                //                mAdapter.addHeaderView(t1);
-                //                TextView t2 = new TextView(CommonItemActivity.this);
-                //                t2.setText("我是header-2");
-                //                mAdapter.addHeaderView(t2);
+                mAdapter.setNewData(data);
+                mAdapter.loadMoreComplete();
+
             }
         }, 2000);
     }
@@ -96,7 +115,7 @@ public class RefreshActivity1 extends AppCompatActivity {
                     mAdapter.loadMoreEnd(STATUS_DEFAULT);
                 } else {
                     final List<String> data = new ArrayList<>();
-                    for (int i = 0; i < 3; i++) {
+                    for (int i = 0; i < 5; i++) {
                         data.add("item--" + (mAdapter.getDataCount() + i));
                     }
                     //刷新数据
@@ -104,5 +123,25 @@ public class RefreshActivity1 extends AppCompatActivity {
                 }
             }
         }, 2000);
+    }
+
+
+    @OnClick({R.id.tv_no_loading, R.id.tv_is_loading, R.id.tv_loadMoreEnd})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_no_loading:
+                mAdapter.setEnableLoadMore(false);
+                break;
+            case R.id.tv_is_loading:
+                mAdapter.setEnableLoadMore(true);
+                loadMore();
+                break;
+            case R.id.tv_loadMoreEnd:
+
+                mAdapter.loadMoreComplete();
+                break;
+
+
+        }
     }
 }

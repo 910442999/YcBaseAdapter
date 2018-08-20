@@ -1,6 +1,7 @@
 package com.yc.YcRecyclerViewBaseAdapter.base;
 
 import android.content.Context;
+import android.support.annotation.IdRes;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -8,17 +9,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.yc.YcRecyclerViewBaseAdapter.adapter.YcBaseAdapter;
+import com.yc.YcRecyclerViewBaseAdapter.adapter.YcCommonBaseAdapter;
+
+import java.util.LinkedHashSet;
+
 /**
  * base viewHolder
  */
 public class YcBaseViewHolder extends RecyclerView.ViewHolder {
     private SparseArray<View> mViews;
     private View mConvertView;
+    private final LinkedHashSet<Integer> childClickViewIds;
+    private YcBaseAdapter mYcBaseAdapter;
 
     public YcBaseViewHolder(View itemView) {
         super(itemView);
         mConvertView = itemView;
         mViews = new SparseArray<>();
+        childClickViewIds = new LinkedHashSet<>();
     }
 
     /**
@@ -36,6 +45,16 @@ public class YcBaseViewHolder extends RecyclerView.ViewHolder {
 
     public static YcBaseViewHolder create(View itemView) {
         return new YcBaseViewHolder(itemView);
+    }
+    /**
+     * Sets the adapter of a adapter view.
+     *
+     * @param adapter The adapter;
+     * @return The BaseViewHolder for chaining.
+     */
+    public YcBaseViewHolder setAdapter(YcBaseAdapter adapter) {
+        this.mYcBaseAdapter = adapter;
+        return this;
     }
 
     /**
@@ -72,6 +91,58 @@ public class YcBaseViewHolder extends RecyclerView.ViewHolder {
         View view = getView(viewId);
         view.setOnClickListener(clickListener);
     }
+
+    /**
+     * Sets the on click listener of the view.
+     *
+     * @param viewId   The view id.
+     * @param listener The on click listener;
+     * @return The BaseViewHolder for chaining.
+     */
+    @Deprecated
+    public YcBaseViewHolder setOnClickListener(@IdRes int viewId, View.OnClickListener listener) {
+        View view = getView(viewId);
+        view.setOnClickListener(listener);
+        return this;
+    }
+
+    private int getClickPosition() {
+        if (getLayoutPosition() >= mYcBaseAdapter.getNormalHeaderLayoutCount()) {
+            return getLayoutPosition() - mYcBaseAdapter.getNormalHeaderLayoutCount();
+        }
+        return 0;
+    }
+
+    /**
+     * add childView id
+     *
+     * @param viewId add the child view id   can support childview click
+     * @return if you use adapter bind listener
+     * @link {(adapter.setOnItemChildClickListener(listener))}
+     * <p>
+     * or if you can use  recyclerView.addOnItemTouch(listerer)  wo also support this menthod
+     */
+    @SuppressWarnings("unchecked")
+    public YcBaseViewHolder addOnClickListener(@IdRes final int viewId) {
+        childClickViewIds.add(viewId);
+        final View view = getView(viewId);
+        if (view != null) {
+            if (!view.isClickable()) {
+                view.setClickable(true);
+            }
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mYcBaseAdapter.getOnItemChildClickListener() != null) {
+                        mYcBaseAdapter.getOnItemChildClickListener().onItemChildClick(mYcBaseAdapter, v, getClickPosition());
+                    }
+                }
+            });
+        }
+
+        return this;
+    }
+
 
     public void setText(int viewId, String text) {
         TextView textView = getView(viewId);
