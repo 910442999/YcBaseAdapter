@@ -5,8 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 /**
- * Author: Othershe
- * Time: 2016/9/1 11:57
+ *
  */
 public class UiUtils {
     /**

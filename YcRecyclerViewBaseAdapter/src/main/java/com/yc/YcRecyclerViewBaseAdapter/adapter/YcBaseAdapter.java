@@ -222,6 +222,7 @@ public abstract class YcBaseAdapter<T, K extends YcBaseViewHolder> extends Recyc
                 //正常布局
                 viewHolder = YcBaseViewHolder.create(mContext, getItemLayoutId(), parent);
         }
+        //在创建view的时候 将当前适配器传递给viewholder
         viewHolder.setAdapter(this);
         return viewHolder;
 

@@ -8,10 +8,9 @@ import com.yc.YcRecyclerViewBaseAdapter.base.YcBaseViewHolder;
 import com.yc.ycbaseadapter.R;
 
 /**
- * Author: Othershe
- * ime: 2016/8/29 15:40
+ * 加载更多适配器
  */
-public class RefreshAdapter extends YcBaseAdapter<String,YcBaseViewHolder> {
+public class RefreshAdapter extends YcBaseAdapter<String, YcBaseViewHolder> {
     @Override
     protected int getItemLayoutId() {
         return R.layout.item_layout;
