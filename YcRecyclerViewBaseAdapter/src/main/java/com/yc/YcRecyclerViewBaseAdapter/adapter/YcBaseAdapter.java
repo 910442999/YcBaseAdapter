@@ -78,14 +78,14 @@ public abstract class YcBaseAdapter<T, K extends YcBaseViewHolder> extends Recyc
         mContext = context;
     }
 
-    //子类必须实现将数据传递给父类onBindViewHolder
-    protected abstract void convert(YcBaseViewHolder holder, T data, int position);
-
-    //获取子类的布局
-    protected abstract int getItemLayoutId();
-
-
     private RecyclerView mRecyclerView;
+
+
+    protected abstract void convert(YcBaseViewHolder holder, T data, int position, int viewType);
+
+    protected abstract int getItemLayoutId(int viewType);
+
+    protected abstract int getViewType(int position, T data);
 
     protected RecyclerView getRecyclerView() {
         return mRecyclerView;
@@ -178,7 +178,9 @@ public abstract class YcBaseAdapter<T, K extends YcBaseViewHolder> extends Recyc
         }
 
 
-        return TYPE_COMMON_VIEW;
+        //return TYPE_COMMON_VIEW;
+        //position-getNormalHeaderLayoutCount() 当前正常布局的位置
+        return getViewType(position - getNormalHeaderLayoutCount(), mDatas.get(position - getNormalHeaderLayoutCount()));
     }
 
     @Override
@@ -220,7 +222,7 @@ public abstract class YcBaseAdapter<T, K extends YcBaseViewHolder> extends Recyc
                 break;
             default:
                 //正常布局
-                viewHolder = YcBaseViewHolder.create(mContext, getItemLayoutId(), parent);
+                viewHolder = YcBaseViewHolder.create(mContext, getItemLayoutId(viewType), parent);
         }
         //在创建view的时候 将当前适配器传递给viewholder
         viewHolder.setAdapter(this);
@@ -1100,7 +1102,7 @@ public abstract class YcBaseAdapter<T, K extends YcBaseViewHolder> extends Recyc
     }
 
     /**
-     * 插入数据  从就的数据的位置开始  到新数据的数量大小的位置
+     * 插入数据  从旧的数据的位置开始  到新数据的数量大小的位置
      *
      * @param datas
      */
@@ -1129,7 +1131,7 @@ public abstract class YcBaseAdapter<T, K extends YcBaseViewHolder> extends Recyc
         if (isCommonItemView(viewType)) {
             position = position - getNormalHeaderLayoutCount();
             if (getItem(position) != null) {
-                bindCommonItem(holder, position);
+                bindCommonItem(holder, position, viewType);
             }
         }
     }
@@ -1173,10 +1175,10 @@ public abstract class YcBaseAdapter<T, K extends YcBaseViewHolder> extends Recyc
         return mOnItemChildClickListeners;
     }
 
-    private void bindCommonItem(RecyclerView.ViewHolder holder, final int position) {
+    private void bindCommonItem(RecyclerView.ViewHolder holder, final int position, int viewType) {
         final YcBaseViewHolder viewHolder = (YcBaseViewHolder) holder;
 
-        convert(viewHolder, getAllData().get(position), position);
+        convert(viewHolder, getAllData().get(position), position, viewType);
 
         viewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
             @Override

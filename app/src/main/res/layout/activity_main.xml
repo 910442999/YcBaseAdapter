@@ -16,7 +16,7 @@
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="多Item布局" />
+        android:text="下拉加载更多" />
 
     <Button
         android:id="@+id/button3"
@@ -28,8 +28,15 @@
     <Button
         android:id="@+id/button4"
         android:visibility="gone"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="GridLayout型列表" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="多条目布局" />
+
+
 </LinearLayout>

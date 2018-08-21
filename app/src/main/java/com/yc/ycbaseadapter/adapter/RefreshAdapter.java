@@ -10,11 +10,7 @@ import com.yc.ycbaseadapter.R;
 /**
  * 加载更多适配器
  */
-public class RefreshAdapter extends YcBaseAdapter<String, YcBaseViewHolder> {
-    @Override
-    protected int getItemLayoutId() {
-        return R.layout.item_layout;
-    }
+public class RefreshAdapter extends YcCommonBaseAdapter<String> {
 
 
     public RefreshAdapter(Context context) {
@@ -22,12 +18,14 @@ public class RefreshAdapter extends YcBaseAdapter<String, YcBaseViewHolder> {
     }
 
     @Override
-    protected void convert(YcBaseViewHolder holder, final String data, int position) {
+    protected void convert(YcBaseViewHolder holder, String data, int position, int viewType) {
         holder.setText(R.id.item_title, data);
         holder.addOnClickListener(R.id.item_title);
         holder.addOnClickListener(R.id.item_btn);
-
     }
 
-
+    @Override
+    protected int getItemLayoutId(int viewType) {
+        return R.layout.item_layout;
+    }
 }

@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".RefreshActivity1" />
-        <activity android:name=".OneItemActivity"></activity>
+        <activity android:name=".OneItemActivity" />
+        <activity android:name=".MultiItemActivity"></activity>
     </application>
 
 </manifest>
