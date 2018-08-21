@@ -43,45 +43,4 @@ public class MultiItemAdapter<T> extends YcMultiBaseAdapter<String> {
         }
         return 1;
     }
-    //
-    //    @Override
-    //    protected void convert(YcBaseViewHolder holder, Object data, int position) {
-    //
-    //    }
-    //
-    //    @Override
-    //    protected int getItemLayoutId() {
-    //        return 0;
-    //    }
-    //
-    //    @Override
-    //    protected void convert(YcBaseViewHolder holder, Object data, int position, int viewType) {
-    //
-    //    }
-    //
-    //
-    //    @Override
-    //    protected void convert(RecyclerView.ViewHolder holder, final String data, int position, int viewType) {
-    //        if (viewType == 0) {
-    //            holder.setText(R.id.item_title, data);
-    //        } else {
-    //            holder.setText(R.id.item_title1, data);
-    //        }
-    //    }
-    //
-    //    @Override
-    //    protected int getItemLayoutId(int viewType) {
-    //        if (viewType == 0) {
-    //            return R.layout.item_layout;
-    //        }
-    //        return R.layout.item_layout1;
-    //    }
-    //
-    //    @Override
-    //    protected int getViewType(int position, String data) {
-    //        if (position % 2 == 0) {
-    //            return 0;
-    //        }
-    //        return 1;
-    //    }
 }
