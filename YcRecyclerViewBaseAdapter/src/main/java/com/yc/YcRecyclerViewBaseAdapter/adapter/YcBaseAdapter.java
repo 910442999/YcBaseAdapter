@@ -20,6 +20,7 @@ import com.yc.YcRecyclerViewBaseAdapter.R;
 import com.yc.YcRecyclerViewBaseAdapter.base.YcBaseViewHolder;
 import com.yc.YcRecyclerViewBaseAdapter.interfaces.OnItemChildClickListener;
 import com.yc.YcRecyclerViewBaseAdapter.interfaces.OnItemClickListener;
+import com.yc.YcRecyclerViewBaseAdapter.interfaces.OnItemLongClickListener;
 import com.yc.YcRecyclerViewBaseAdapter.interfaces.OnLoadMoreListener;
 import com.yc.YcRecyclerViewBaseAdapter.utils.UiUtils;
 
@@ -72,6 +73,7 @@ public abstract class YcBaseAdapter<T, K extends YcBaseViewHolder> extends Recyc
     public static final int STATUS_END_SHOW_GONE = 2;//显示1秒后隐藏 , 持续显示与隐藏
     public static final int STATUS_END_GONE = 3;//隐藏加载完成布局
     private OnItemClickListener<T> mItemClickListener;
+    private OnItemLongClickListener<T> mOnItemLongClickListener;
     private OnItemChildClickListener mOnItemChildClickListeners;
 
     public YcBaseAdapter(Context context) {
@@ -1159,6 +1161,22 @@ public abstract class YcBaseAdapter<T, K extends YcBaseViewHolder> extends Recyc
     }
 
     /**
+     * 设置条目长按点击监听
+     *
+     * @param onItemLongClickListener
+     */
+    public void setOnItemLongClickListener(OnItemLongClickListener<T> onItemLongClickListener) {
+        mOnItemLongClickListener = onItemLongClickListener;
+    }
+
+    /**
+     * @return 获取条目长按点击监听
+     */
+    public final OnItemLongClickListener getOnItemLongClickListener() {
+        return mOnItemLongClickListener;
+    }
+
+    /**
      * 设置条目中子view的点击监听
      *
      * @param listener
@@ -1188,6 +1206,14 @@ public abstract class YcBaseAdapter<T, K extends YcBaseViewHolder> extends Recyc
                 }
             }
         });
+        viewHolder.getConvertView().setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                mOnItemLongClickListener.onItemLongClick(viewHolder, getAllData().get(position), position);
+                return false;
+            }
+        });
+
     }
 
     @Nullable
