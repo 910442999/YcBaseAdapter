@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
                 start(RefreshActivity1.class);
                 break;
             case R.id.button3:
+
+                start(TreeViewItemActivity.class);
+
                 break;
             case R.id.button4:
 

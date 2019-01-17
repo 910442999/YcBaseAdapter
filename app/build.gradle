@@ -6,8 +6,8 @@ android {
         applicationId "com.yc.ycbaseadapter"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 102
-        versionName "1.0.2"
+        versionCode 103
+        versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -31,4 +31,5 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation project(':YcRecyclerViewBaseAdapter')
+    implementation 'com.google.code.gson:gson:2.8.5'
 }

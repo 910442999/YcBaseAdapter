@@ -20,10 +20,9 @@
 
     <Button
         android:id="@+id/button3"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="模拟初次加载失败" />
+        android:text="树形列表视图" />
 
     <Button
         android:id="@+id/button4"
