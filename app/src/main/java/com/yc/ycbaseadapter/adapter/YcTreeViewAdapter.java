@@ -1,9 +1,10 @@
-package com.yc.YcRecyclerViewBaseAdapter.adapter;
+package com.yc.ycbaseadapter.adapter;
 
 import android.content.Context;
 import android.os.Build;
 
 import com.yc.YcRecyclerViewBaseAdapter.R;
+import com.yc.YcRecyclerViewBaseAdapter.adapter.YcTreeViewBaseAdapter;
 import com.yc.YcRecyclerViewBaseAdapter.base.YcBaseViewHolder;
 import com.yc.YcRecyclerViewBaseAdapter.bean.TreeNode;
 

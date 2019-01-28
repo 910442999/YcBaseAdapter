@@ -8,7 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.yc.YcRecyclerViewBaseAdapter.adapter.YcTreeViewAdapter;
+import com.yc.ycbaseadapter.adapter.YcTreeViewAdapter;
 import com.yc.YcRecyclerViewBaseAdapter.base.YcBaseViewHolder;
 import com.yc.YcRecyclerViewBaseAdapter.bean.TreeNode;
 import com.yc.YcRecyclerViewBaseAdapter.interfaces.OnItemClickListener;
