@@ -31,4 +31,4 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.1.1'
 }
 //上传仓库配置
-//apply from: "bintrayUpload.gradle"
+apply from: "bintrayUpload.gradle"
