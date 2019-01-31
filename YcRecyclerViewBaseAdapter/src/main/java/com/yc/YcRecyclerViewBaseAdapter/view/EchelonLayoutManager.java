@@ -10,7 +10,7 @@ import com.yc.YcRecyclerViewBaseAdapter.bean.ItemViewInfo;
 import java.util.ArrayList;
 
 /**
- * 阶梯管理器
+ * 阶梯管理器 foldLayoutManager
  */
 
 public class EchelonLayoutManager extends RecyclerView.LayoutManager {
