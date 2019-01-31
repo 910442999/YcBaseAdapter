@@ -5,13 +5,13 @@ ext {
     applicationId = 'com.yc.ycbaseadapter'
     compileSdkVersion = 27
     targetSdkVersion = 27
-    minSdkVersion = 15
+    minSdkVersion = 19
     buildToolsVersion = "27.1.1"
-    versionCode = 105
-    versionName = "1.0.5"
+    versionCode = 106
+    versionName = "1.0.6"
 }
 
 //compile依赖的第三方库
 ext.deps = [
-        supportv4                  : "com.android.support:support-v4:$supportLibraryVersion",
+        YcAndroidUtils             : 'com.yc:YcAndroidUtils:1.2.8',
 ]

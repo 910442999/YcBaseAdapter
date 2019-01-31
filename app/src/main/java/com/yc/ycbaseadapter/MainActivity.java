@@ -6,29 +6,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.yc.yclibrary.YcUtils;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.button1)
-    Button mButton1;
-    @BindView(R.id.button2)
-    Button mButton2;
-    @BindView(R.id.button3)
-    Button mButton3;
-    @BindView(R.id.button4)
-    Button mButton4;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        YcUtils.init(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5})
+    @OnClick({R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.button6})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.button1:
@@ -38,18 +32,18 @@ public class MainActivity extends AppCompatActivity {
                 start(RefreshActivity1.class);
                 break;
             case R.id.button3:
-
                 start(TreeViewItemActivity.class);
-
-                break;
-            case R.id.button4:
-
                 break;
             case R.id.button5:
-
                 start(MultiItemActivity.class);
-
                 break;
+            case R.id.button4:
+                start(MoreTypeItemActivity.class);
+                break;
+            case R.id.button6:
+                start(MultiItemActivity.class);
+                break;
+
         }
     }
 

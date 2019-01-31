@@ -19,7 +19,8 @@
         <activity android:name=".RefreshActivity1" />
         <activity android:name=".OneItemActivity" />
         <activity android:name=".MultiItemActivity" />
-        <activity android:name=".TreeViewItemActivity"></activity>
+        <activity android:name=".TreeViewItemActivity" />
+        <activity android:name=".MoreTypeItemActivity"></activity>
     </application>
 
 </manifest>

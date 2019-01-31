@@ -2,7 +2,6 @@ package com.yc.ycbaseadapter.adapter;
 
 import android.content.Context;
 
-import com.yc.YcRecyclerViewBaseAdapter.adapter.YcBaseAdapter;
 import com.yc.YcRecyclerViewBaseAdapter.adapter.YcCommonBaseAdapter;
 import com.yc.YcRecyclerViewBaseAdapter.base.YcBaseViewHolder;
 import com.yc.ycbaseadapter.R;
@@ -11,7 +10,6 @@ import com.yc.ycbaseadapter.R;
  * 加载更多适配器
  */
 public class RefreshAdapter extends YcCommonBaseAdapter<String> {
-
 
     public RefreshAdapter(Context context) {
         super(context);
