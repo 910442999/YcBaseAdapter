@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.button6})
+    @OnClick({R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.button6, R.id.button7, R.id.button8})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.button1:
@@ -41,7 +41,13 @@ public class MainActivity extends AppCompatActivity {
                 start(MoreTypeItemActivity.class);
                 break;
             case R.id.button6:
-                start(MultiItemActivity.class);
+                start(OverFlyingActivity.class);
+                break;
+            case R.id.button7:
+                start(LadderActivity.class);
+                break;
+            case R.id.button8:
+                start(FlowActivity.class);
                 break;
 
         }

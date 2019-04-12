@@ -34,11 +34,25 @@
         android:id="@+id/button4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="阶梯列表1" />
+        android:text="Echelon阶梯列表1" />
 
     <Button
         android:id="@+id/button6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="阶梯列表2" />
+        android:text="OverFlying阶梯列表2" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="自定义阶梯列表3" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="流式布局" />
+
+
 </LinearLayout>

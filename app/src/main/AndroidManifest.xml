@@ -20,7 +20,10 @@
         <activity android:name=".OneItemActivity" />
         <activity android:name=".MultiItemActivity" />
         <activity android:name=".TreeViewItemActivity" />
-        <activity android:name=".MoreTypeItemActivity"></activity>
+        <activity android:name=".MoreTypeItemActivity" />
+        <activity android:name=".OverFlyingActivity" />
+        <activity android:name=".LadderActivity"></activity>
+        <activity android:name=".FlowActivity"></activity>
     </application>
 
 </manifest>
