@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yc.ycbaseadapter.adapter.LadderAdapter;
-import com.yc.yclibrary.YcToastUtils;
 
 import java.util.ArrayList;
 
@@ -51,7 +50,7 @@ public class LadderActivity extends AppCompatActivity {
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                YcToastUtils.normal(LadderActivity.this, "侧滑啊").show();
+
             }
         });
 

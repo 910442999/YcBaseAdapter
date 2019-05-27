@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.yc.yclibrary.YcUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        YcUtils.init(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
     }

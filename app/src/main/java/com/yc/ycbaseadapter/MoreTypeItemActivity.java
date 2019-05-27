@@ -13,9 +13,6 @@ import android.widget.TextView;
 import com.yc.YcRecyclerViewBaseAdapter.view.EchelonLayoutManager;
 import com.yc.ycbaseadapter.adapter.MoreTypeItemAdapter;
 import com.yc.ycbaseadapter.bean.MoreTabEchelonBean;
-import com.yc.yclibrary.YcImageUtils;
-import com.yc.yclibrary.YcScreenCaptureUtils;
-import com.yc.yclibrary.YcToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,24 +36,24 @@ public class MoreTypeItemActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                position++;
-                Bitmap bitmap = YcScreenCaptureUtils.loadBitmapFromView(ll_content);
-                MoreTabEchelonBean moreTabEchelonBean = new MoreTabEchelonBean();
-                moreTabEchelonBean.setTitle("标题" + position);
-                moreTabEchelonBean.setIcon("http://www.baidu.com");
-                moreTabEchelonBean.setHomePage(true);
-                saveMoreTabBitmap(String.valueOf(System.currentTimeMillis()), false, bitmap, moreTabEchelonBean);
-                mMoreTabEchelonBeans.add(moreTabEchelonBean);
-                mMoreTypeItemAdapter.setNewData(mMoreTabEchelonBeans);
-                mRecyclerView.scrollToPosition(mMoreTabEchelonBeans.size() - 1);
-                mMoreTypeItemAdapter.notifyDataSetChanged();
+//                position++;
+//                Bitmap bitmap = YcScreenCaptureUtils.loadBitmapFromView(ll_content);
+//                MoreTabEchelonBean moreTabEchelonBean = new MoreTabEchelonBean();
+//                moreTabEchelonBean.setTitle("标题" + position);
+//                moreTabEchelonBean.setIcon("http://www.baidu.com");
+//                moreTabEchelonBean.setHomePage(true);
+//                saveMoreTabBitmap(String.valueOf(System.currentTimeMillis()), false, bitmap, moreTabEchelonBean);
+//                mMoreTabEchelonBeans.add(moreTabEchelonBean);
+//                mMoreTypeItemAdapter.setNewData(mMoreTabEchelonBeans);
+//                mRecyclerView.scrollToPosition(mMoreTabEchelonBeans.size() - 1);
+//                mMoreTypeItemAdapter.notifyDataSetChanged();
             }
         });
         TextView remove = findViewById(R.id.remove);
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                YcToastUtils.normal(MoreTypeItemActivity.this, "侧滑啊").show();
+
             }
         });
 
@@ -88,11 +85,11 @@ public class MoreTypeItemActivity extends AppCompatActivity {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 final int pos = viewHolder.getAdapterPosition();
-                YcImageUtils.removeLruCacheBitmap(mMoreTabEchelonBeans.get(pos).getBmImage());
-                List<MoreTabEchelonBean> allData = mMoreTypeItemAdapter.getAllData();
-                mMoreTabEchelonBeans.remove(pos);
-                allData.remove(pos);
-                mMoreTypeItemAdapter.notifyDataSetChanged();
+//                YcImageUtils.removeLruCacheBitmap(mMoreTabEchelonBeans.get(pos).getBmImage());
+//                List<MoreTabEchelonBean> allData = mMoreTypeItemAdapter.getAllData();
+//                mMoreTabEchelonBeans.remove(pos);
+//                allData.remove(pos);
+//                mMoreTypeItemAdapter.notifyDataSetChanged();
             }
 
             //处理动画
@@ -112,10 +109,10 @@ public class MoreTypeItemActivity extends AppCompatActivity {
     }
 
     public void saveMoreTabBitmap(String bmName, boolean isRemoveOld, Bitmap bitmap, MoreTabEchelonBean moreTabEchelonBean) {
-        if (isRemoveOld) {
-            YcImageUtils.removeLruCacheBitmap(bmName);
-        }
-        YcImageUtils.saveLruCacheBitmap(bmName, bitmap);
-        moreTabEchelonBean.setBmImage(bmName);
+//        if (isRemoveOld) {
+//            YcImageUtils.removeLruCacheBitmap(bmName);
+//        }
+//        YcImageUtils.saveLruCacheBitmap(bmName, bitmap);
+//        moreTabEchelonBean.setBmImage(bmName);
     }
 }

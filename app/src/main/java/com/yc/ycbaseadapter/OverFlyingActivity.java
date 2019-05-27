@@ -16,9 +16,6 @@ import com.yc.YcRecyclerViewBaseAdapter.view.OverFlyingLayoutManager;
 import com.yc.ycbaseadapter.adapter.MoreTypeItemAdapter;
 import com.yc.ycbaseadapter.adapter.VertialAdatpter;
 import com.yc.ycbaseadapter.bean.MoreTabEchelonBean;
-import com.yc.yclibrary.YcImageUtils;
-import com.yc.yclibrary.YcScreenCaptureUtils;
-import com.yc.yclibrary.YcToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +62,7 @@ public class OverFlyingActivity extends AppCompatActivity {
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                YcToastUtils.normal(OverFlyingActivity.this, "侧滑啊").show();
+
             }
         });
 
@@ -128,11 +125,11 @@ public class OverFlyingActivity extends AppCompatActivity {
     }
 
     public void saveMoreTabBitmap(String bmName, boolean isRemoveOld, Bitmap bitmap, MoreTabEchelonBean moreTabEchelonBean) {
-        if (isRemoveOld) {
-            YcImageUtils.removeLruCacheBitmap(bmName);
-        }
-        YcImageUtils.saveLruCacheBitmap(bmName, bitmap);
-        moreTabEchelonBean.setBmImage(bmName);
+//        if (isRemoveOld) {
+//            YcImageUtils.removeLruCacheBitmap(bmName);
+//        }
+//        YcImageUtils.saveLruCacheBitmap(bmName, bitmap);
+//        moreTabEchelonBean.setBmImage(bmName);
     }
 
 }

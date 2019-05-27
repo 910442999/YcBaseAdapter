@@ -9,7 +9,6 @@ import com.yc.YcRecyclerViewBaseAdapter.adapter.YcCommonBaseAdapter;
 import com.yc.YcRecyclerViewBaseAdapter.base.YcBaseViewHolder;
 import com.yc.ycbaseadapter.R;
 import com.yc.ycbaseadapter.bean.MoreTabEchelonBean;
-import com.yc.yclibrary.YcImageUtils;
 
 public class MoreTypeItemAdapter extends YcCommonBaseAdapter<MoreTabEchelonBean> {
     public MoreTypeItemAdapter(Context context) {
@@ -34,9 +33,9 @@ public class MoreTypeItemAdapter extends YcCommonBaseAdapter<MoreTabEchelonBean>
         }
 
         String bmImage = data.getBmImage();
-        Bitmap bitmap = YcImageUtils.getLruCacheBitmap(bmImage);
-        ImageView imageView = (ImageView) holder.getView(R.id.img_bg);
-        imageView.setImageBitmap(bitmap);
+//        Bitmap bitmap = YcImageUtils.getLruCacheBitmap(bmImage);
+//        ImageView imageView = (ImageView) holder.getView(R.id.img_bg);
+//        imageView.setImageBitmap(bitmap);
     }
 
     @Override

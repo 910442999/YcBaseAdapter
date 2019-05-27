@@ -1209,7 +1209,9 @@ public abstract class YcBaseAdapter<T, K extends YcBaseViewHolder> extends Recyc
         viewHolder.getConvertView().setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                mOnItemLongClickListener.onItemLongClick(viewHolder, getAllData().get(position), position);
+                if (getOnItemLongClickListener() != null) {
+                    mOnItemLongClickListener.onItemLongClick(viewHolder, getAllData().get(position), position);
+                }
                 return false;
             }
         });

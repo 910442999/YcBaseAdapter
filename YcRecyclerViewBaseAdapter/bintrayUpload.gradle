@@ -20,20 +20,3 @@ tasks.withType(Javadoc) {//防止编码问题
         links "http://docs.oracle.com/javase/7/docs/api"
     }
 }
-
-////Copy类型 打jar包相关
-//task makeJar(type: Copy) {
-//    //删除存在的
-//    delete 'build/libs/yc_android_utils.jar'
-//    //设置拷贝的文件
-//    from('build/intermediates/bundles/release/')
-//    //打进jar包后的文件目录
-//    into('build/libs/')
-//    //将classes.jar放入build/libs/目录下
-//    //include ,exclude参数来设置过滤
-//    //（我们只关心classes.jar这个文件）
-//    include('classes.jar')
-//    //重命名
-//    rename ('classes.jar', 'yc_android_utils.jar')
-//}
-//makeJar.dependsOn(build)
