@@ -8,7 +8,7 @@ recyclerview的baseAdapter的封装 最新版为 : 1.0.1
 
 gradle 引入: 最新版即可
 
-implementation 'com.yc:YcBaseAdapter:1.0.0'
+implementation 'com.github.910442999:YcBaseAdapter:1.0.9'
 
 如果有下载不了的情况 在根目录下的 gradle中添加 如下即可
 
@@ -16,7 +16,7 @@ allprojects {
    
    repositories {
        
-       maven {url "https://dl.bintray.com/910442999/YcBaseAdapter"}
+       maven { url 'https://jitpack.io' }
    
    }
 }
