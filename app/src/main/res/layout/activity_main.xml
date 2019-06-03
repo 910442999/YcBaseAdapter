@@ -54,5 +54,9 @@
         android:layout_height="wrap_content"
         android:text="流式布局" />
 
-
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="第三方库刷新库" />
 </LinearLayout>

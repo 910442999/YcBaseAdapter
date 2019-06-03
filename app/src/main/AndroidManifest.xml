@@ -24,6 +24,7 @@
         <activity android:name=".OverFlyingActivity" />
         <activity android:name=".LadderActivity"></activity>
         <activity android:name=".FlowActivity"></activity>
+        <activity android:name=".RefreshLoadActivity"></activity>
     </application>
 
 </manifest>

@@ -13,7 +13,8 @@ ext {
 
 //compile依赖的第三方库
 ext.deps = [
-        appcompatv7             : 'com.android.support:appcompat-v7:27.1.1',
-        recyclerview             : 'com.android.support:recyclerview-v7:27.1.1',
-
+        appcompatv7       : 'com.android.support:appcompat-v7:27.1.1',
+        recyclerview      : 'com.android.support:recyclerview-v7:27.1.1',
+        rmart_refresh_layout: 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-28',
+        design            : 'com.android.support:design:27.1.1'
 ]

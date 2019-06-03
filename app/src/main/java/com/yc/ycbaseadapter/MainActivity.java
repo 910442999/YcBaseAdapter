@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -20,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.button6, R.id.button7, R.id.button8})
+    @OnClick({R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.button6, R.id.button7, R.id.button8, R.id.button9})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.button1:
@@ -46,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.button8:
                 start(FlowActivity.class);
+                break;
+            case R.id.button9:
+                start(RefreshLoadActivity.class);
                 break;
 
         }
