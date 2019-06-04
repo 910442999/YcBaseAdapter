@@ -44,12 +44,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        <com.yc.ycbaseadapter.header.PhoenixHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srlAccentColor="@android:color/white"
-            app:srlClassicsSpinnerStyle="FixedBehind"
-            app:srlPrimaryColor="#444" />
+            android:layout_height="match_parent"
+            app:phAccentColor="@color/white"
+            app:phPrimaryColor="@color/colorPrimary" />
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
